@@ -1,34 +1,50 @@
-import React, { useState } from "react";
-export const AddTodo = ({ onAdd }) => {
-  const [text, setText] = useState("");
-  const [error, setError] = useState(null);
+import React from "react";
+import { useForm } from "react-hook-form";
 
-  const handleSave = () => {
-    if (!text.trim()) {
-      setError("Please enter a todo!");
-      return;
-    }
-    setError(null);
-    onAdd(text);
-    setText("");
+export const AddTodo = ({ onAdd }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    onAdd(data.text, data.description);
+    reset();
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 p-4 bg-gray-100 rounded-lg shadow-md">
-      {error && <p className="bg-red-400 p-2 my-2">{error}</p>}
+    <form
+      className="flex flex-col items-center space-y-4 p-4 bg-gray-100 rounded-lg shadow-md"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <input
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        {...register("text", { required: "Enter a todo" })}
         type="text"
-        placeholder="Enter a todo..."
-        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter todo..."
+        className="w-full p-2 border border-gray-300 rounded-lg"
       />
+      {errors.text && (
+        <span className="text-red-500">{errors.text.message}</span>
+      )}
+
+      <input
+        {...register("description", { required: "Enter a description" })}
+        type="text"
+        placeholder="Enter description..."
+        className="w-full p-2 border border-gray-300 rounded-lg"
+      />
+      {errors.description && (
+        <span className="text-red-500">{errors.description.message}</span>
+      )}
+
       <button
+        type="submit"
         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        onClick={handleSave}
       >
-        Save
+        Add Todo
       </button>
-    </div>
+    </form>
   );
 };

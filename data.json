@@ -1,0 +1,28 @@
+{
+  "todos": [
+    {
+      "id": "101",
+      "text": "read a book",
+      "description": "Read a programming book",
+      "completed": false
+    },
+    {
+      "id": "102",
+      "text": "eat a burger",
+      "description": "Eat a tasty burger",
+      "completed": true
+    },
+    {
+      "id": "0640",
+      "text": "say hi",
+      "description": "hahaha",
+      "completed": false
+    },
+    {
+      "id": "3ce7",
+      "text": "yesss",
+      "description": "noo",
+      "completed": true
+    }
+  ]
+}
